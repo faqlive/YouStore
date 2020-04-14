@@ -7,7 +7,6 @@ public enum Role {
 	private String nameRole;
 	private int idRole;
 	
-
 	private Role(String nameRole, int idRole) {
 		this.nameRole = nameRole;
 		this.idRole = idRole;

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.User;
@@ -37,8 +38,12 @@ public class UserDao implements IUserDao{
 
 	@Override
 	public void delete(String mail) {
-		// TODO Auto-generated method stub
-		
+		try {
+			statement = conexion.prepareStatement("DELETE FROM users WHERE mail=?");
+			statement.setString(1, mail);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
@@ -64,8 +69,24 @@ public class UserDao implements IUserDao{
 
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> list = new ArrayList<User>();
+		User user = null;
+		try {
+			statement = conexion.prepareStatement("SELECT * FROM users");
+			resultado = statement.executeQuery();
+			while(resultado.next()) {
+				user = new User();
+				user.setId(resultado.getInt("id"));
+				user.setMail(resultado.getString("mail"));
+				user.setName(resultado.getString("name"));
+				user.setDateup(resultado.getDate("dateup").toLocalDate());
+				user.setPass(resultado.getBytes("password"));
+				list.add(user);
+			}
+		}catch(SQLException e) {
+			
+		}
+		return list;
 	}
 
 }

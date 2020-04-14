@@ -1,6 +1,6 @@
 package services;
 
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.IUserDao;
@@ -23,20 +23,30 @@ public class ServiceUser implements IServiceUser{
 
 	@Override
 	public void delete(String mail) {
-		// TODO Auto-generated method stub
-		
+		IConexion conn = Conexion.getInstace();
+		IUserDao userDao = new UserDao(conn.conectBBDD());
+		userDao.delete(mail);
+		conn.disconBBDD();		
 	}
 
 	@Override
 	public User get(String mail) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = null;
+		IConexion conn = Conexion.getInstace();
+		IUserDao userDao = new UserDao(conn.conectBBDD());
+		user = userDao.get(mail);
+		conn.disconBBDD();		
+		return user;
 	}
 
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> list = new ArrayList<User>();
+		IConexion conn = Conexion.getInstace();
+		IUserDao userDao = new UserDao(conn.conectBBDD());
+		list= userDao.getAll();
+		conn.disconBBDD();		
+		return list;
 	}
 	
 }

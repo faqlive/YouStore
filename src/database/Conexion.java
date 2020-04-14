@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 public class Conexion implements IConexion {
 	public static Connection conn;
+	public static Conexion instaceConexion;
+	
 	public BBDD source;
 	
 	enum BBDD {ORACLE,MySQL}
@@ -47,4 +49,12 @@ public class Conexion implements IConexion {
 		}
 	}
 
+	public BBDD getSource() {
+		return source;
+	}
+
+	public void setSource(BBDD source) {
+		this.source = source;
+	}
+	
 }
