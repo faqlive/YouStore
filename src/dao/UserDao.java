@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.IConexion;
 import model.User;
 
 public class UserDao implements IUserDao{
@@ -16,15 +17,19 @@ public class UserDao implements IUserDao{
 	
 	
 
-	public UserDao(Connection conexion) {
+	public UserDao(IConexion conexion) {
 		super();
-		this.conexion = conexion;
+		try {
+			this.conexion = conexion.conectBBDD();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void save(User entity) {
 		try {
-			statement = conexion.prepareStatement("INSERT INTO users VALUES(null,?,?,?,?)");
+			statement = conexion.prepareStatement("INSERT INTO users(mail,name,pass,dateup) VALUES(?,?,?,?)");
 			statement.setString(1, entity.getMail());
 			statement.setString(2, entity.getName());
 			statement.setBytes(3, entity.getPass());
@@ -48,7 +53,7 @@ public class UserDao implements IUserDao{
 
 	@Override
 	public User get(String mail) {
-		User user = null;
+		User user = new User();
 		try {
 			statement = conexion.prepareStatement("SELECT * FROM users WHERE mail=?");
 			statement.setString(1, mail);
@@ -58,7 +63,7 @@ public class UserDao implements IUserDao{
 				user.setMail(mail);
 				user.setName(resultado.getString("name"));
 				user.setDateup(resultado.getDate("dateup").toLocalDate());
-				user.setPass(resultado.getBytes("password"));		
+				user.setPass(resultado.getBytes("pass"));		
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -80,7 +85,7 @@ public class UserDao implements IUserDao{
 				user.setMail(resultado.getString("mail"));
 				user.setName(resultado.getString("name"));
 				user.setDateup(resultado.getDate("dateup").toLocalDate());
-				user.setPass(resultado.getBytes("password"));
+				user.setPass(resultado.getBytes("pass"));
 				list.add(user);
 			}
 		}catch(SQLException e) {

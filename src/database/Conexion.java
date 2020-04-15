@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Conexion implements IConexion {
-	public static Connection conn;
-	public static Conexion instaceConexion;
-	
-	public BBDD source;
-	
 	enum BBDD {ORACLE,MySQL}
+	public static Connection conn;
+	public BBDD source;
 	
 	private Conexion() {	
 		this.source = BBDD.MySQL;
@@ -21,9 +18,8 @@ public class Conexion implements IConexion {
 
 	
 	@Override
-	public Connection conectBBDD() {
-		//TODO detecta base de datos
-		if (conn == null) {
+	public Connection conectBBDD() throws SQLException {
+		if (conn == null || conn.isClosed()) {
 			switch(source) {
 			case MySQL:
 				conn = MySqlConexion.conectBBDD();

@@ -15,7 +15,7 @@ public class ServiceUser implements IServiceUser{
 	@Override
 	public void save(User entity) {
 		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn.conectBBDD());
+		IUserDao userDao = new UserDao(conn);
 		userDao.save(entity);
 		conn.disconBBDD();
 		
@@ -24,7 +24,7 @@ public class ServiceUser implements IServiceUser{
 	@Override
 	public void delete(String mail) {
 		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn.conectBBDD());
+		IUserDao userDao = new UserDao(conn);
 		userDao.delete(mail);
 		conn.disconBBDD();		
 	}
@@ -33,7 +33,7 @@ public class ServiceUser implements IServiceUser{
 	public User get(String mail) {
 		User user = null;
 		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn.conectBBDD());
+		IUserDao userDao = new UserDao(conn);
 		user = userDao.get(mail);
 		conn.disconBBDD();		
 		return user;
@@ -43,7 +43,7 @@ public class ServiceUser implements IServiceUser{
 	public List<User> getAll() {
 		List<User> list = new ArrayList<User>();
 		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn.conectBBDD());
+		IUserDao userDao = new UserDao(conn);
 		list= userDao.getAll();
 		conn.disconBBDD();		
 		return list;

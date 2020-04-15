@@ -33,18 +33,36 @@ public class login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
-		User user = new User();
+	// Inicializar session y definición de variables globales.
+		HttpSession session = request.getSession(false);
+		User user = null;
+		boolean access = false;
+		String mensaje = "";
+	// Recoger informacion del loging
 		String mail=request.getParameter("mail");
 		String password=request.getParameter("password");
+	// Comprobación de inicio de session
 		IServiceUser userService = new ServiceUser();
 		user = userService.get(mail);
-		byte [] pass =EncryptPass.getPassDigest(password);
-		byte [] pass2 = user.getPass();
-		boolean access = EncryptPass.equalsDigest(pass, pass2);
-		
-		 RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-		 rd.forward(request, response);
+		if(user != null) {
+			byte [] pass =EncryptPass.getPassDigest(password);
+			byte [] pass2 = user.getPass();
+			access = EncryptPass.equalsDigest(pass, pass2);	
+			if(access) {
+				mensaje = "Conexion exitosa, Bienvenido: " + user.getName() + " a YouStore";
+				session =  request.getSession(true);
+				session.setAttribute("access", access);
+			}else {
+				mensaje = "Password Incorrecta";
+			}
+		}else {
+			mensaje = "Usuario no existe";
+		}
+	//	request.setAttribute("access", access);
+		request.setAttribute("mensaje",mensaje);
+		request.setAttribute("user",user);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
 		
 	}
 
