@@ -35,6 +35,13 @@ public class login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	// Inicializar session y definición de variables globales.
 		HttpSession session = request.getSession(false);
+		String nextpage="";
+		if(session.getAttribute("nextpage")==null){
+			nextpage ="/index.jsp";
+		}else {
+			nextpage =(String) session.getAttribute("nextpage");
+		}
+		
 		User user = null;
 		boolean access = false;
 		String mensaje = "";
@@ -61,7 +68,7 @@ public class login extends HttpServlet {
 	//	request.setAttribute("access", access);
 		request.setAttribute("mensaje",mensaje);
 		request.setAttribute("user",user);
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(nextpage);
 		rd.forward(request, response);
 		
 	}
