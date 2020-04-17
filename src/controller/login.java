@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import model.User;
 import security.EncryptPass;
 import services.IServiceUser;
@@ -49,8 +48,8 @@ public class login extends HttpServlet {
 		String mail=request.getParameter("mail");
 		String password=request.getParameter("password");
 	// Comprobación de inicio de session
-		IServiceUser userService = new ServiceUser();
-		user = userService.get(mail);
+		IServiceUser servicUser = new ServiceUser();
+		user = servicUser.get(mail);
 		if(user != null) {
 			byte [] pass =EncryptPass.getPassDigest(password);
 			byte [] pass2 = user.getPass();

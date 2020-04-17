@@ -1,32 +1,36 @@
 package generics;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GenericService<T, ID> implements IGenericService<T, ID>{
+public abstract class GenericService<T, ID extends Serializable> implements IGenericService<T, ID> {
 
 	@Override
-	public T save(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public void save(T entity) {
+		getDao().save(entity);
 	}
 
 	@Override
 	public void delete(ID id) {
-		// TODO Auto-generated method stub
-		
+		getDao().delete(id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T get(ID id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (T) getDao().get(id);
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<T> returnList = new ArrayList<>();
+		getDao().getAll().forEach(obj -> returnList.add((T) obj));
+		return returnList;
 	}
 	
+	public abstract IGenericDao<T, ID> getDao();
 
 }

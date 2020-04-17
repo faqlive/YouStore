@@ -1,12 +1,11 @@
 package dao;
 
-import java.util.List;
 
+import generics.IGenericDao;
 import model.User;
 
-public interface IUserDao {
-	public void save(User entity);
-	public void delete(String mail);
-	public User get(String mail);
-	public List<User> getAll();
+public interface IUserDao extends IGenericDao<User,String>{
+	/*
+	 * METODOS CRUD YA DECLARADOS
+	 * */
 }

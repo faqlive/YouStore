@@ -1,13 +1,12 @@
 package services;
 
-import java.util.List;
 
+import generics.IGenericService;
 import model.User;
 
-public interface IServiceUser {
-	public void save(User entity);
-	public void delete(String mail);
-	public User get(String mail);
-	public List<User> getAll();
+public interface IServiceUser extends IGenericService <User,String>{
+	/*
+	 * DECLARADOS EN I GENERIC SERVICE
+	 */
 
 }

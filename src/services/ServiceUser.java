@@ -1,52 +1,25 @@
 package services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import dao.IUserDao;
 import dao.UserDao;
 import database.Conexion;
 import database.IConexion;
+import generics.GenericService;
+import generics.IGenericDao;
 import model.User;
 
-public class ServiceUser implements IServiceUser{
+
+public class ServiceUser extends GenericService<User,String> implements IServiceUser{
 	
-	
-	@Override
-	public void save(User entity) {
-		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn);
-		userDao.save(entity);
-		conn.disconBBDD();
-		
+
+	public ServiceUser() {
+		super();
+
 	}
 
 	@Override
-	public void delete(String mail) {
+	public IGenericDao <User, String> getDao() {
 		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn);
-		userDao.delete(mail);
-		conn.disconBBDD();		
-	}
-
-	@Override
-	public User get(String mail) {
-		User user = null;
-		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn);
-		user = userDao.get(mail);
-		conn.disconBBDD();		
-		return user;
-	}
-
-	@Override
-	public List<User> getAll() {
-		List<User> list = new ArrayList<User>();
-		IConexion conn = Conexion.getInstace();
-		IUserDao userDao = new UserDao(conn);
-		list= userDao.getAll();
-		conn.disconBBDD();		
-		return list;
+		return new UserDao(conn);
 	}
 	
 }

@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,22 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.IConexion;
+import generics.GenericDao;
 import model.User;
 
-public class UserDao implements IUserDao{
-	private Connection conexion;
+public class UserDao extends GenericDao implements IUserDao{
+	
 	private ResultSet resultado;
 	private PreparedStatement statement;
 	
 	
 
 	public UserDao(IConexion conexion) {
-		super();
-		try {
-			this.conexion = conexion.conectBBDD();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		super(conexion);
+
 	}
 
 	@Override
@@ -38,7 +35,15 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+			
 	}
 
 	@Override
@@ -48,6 +53,13 @@ public class UserDao implements IUserDao{
 			statement.setString(1, mail);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}		
 	}
 
@@ -68,6 +80,13 @@ public class UserDao implements IUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return user;
 	}
@@ -90,6 +109,13 @@ public class UserDao implements IUserDao{
 			}
 		}catch(SQLException e) {
 			
+		}finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return list;
 	}
