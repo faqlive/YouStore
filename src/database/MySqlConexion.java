@@ -12,7 +12,7 @@ public class MySqlConexion {
 	 * Conexion on base de datos MySql
 	 * */
 	
-	public static Connection conectBBDD() {
+	public static Connection getConexion() {
 		// try (Connection connr =
 		// DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda","root","")){
 		try{

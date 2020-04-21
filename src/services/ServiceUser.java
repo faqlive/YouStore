@@ -5,10 +5,11 @@ import database.Conexion;
 import database.IConexion;
 import generics.GenericService;
 import generics.IGenericDao;
+import interfeces.IServiceUser;
 import model.User;
 
 
-public class ServiceUser extends GenericService<User,String> implements IServiceUser{
+public class ServiceUser extends GenericService<User,String,String> implements IServiceUser{
 	
 
 	public ServiceUser() {
@@ -17,7 +18,7 @@ public class ServiceUser extends GenericService<User,String> implements IService
 	}
 
 	@Override
-	public IGenericDao <User, String> getDao() {
+	public IGenericDao <User, String,String> getDao() {
 		IConexion conn = Conexion.getInstace();
 		return new UserDao(conn);
 	}

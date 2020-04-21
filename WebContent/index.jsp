@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<c:set var="now" value="<%=new java.util.Date()%>" />
+	<c:set var="now" scope="page" value="<%=new java.util.Date()%>" />
 	
 	 
 	<header>
@@ -51,7 +51,7 @@
 					</p>
 				</c:if>
 				<p>
-					<a href="./categories.jsp">Página Segura.</a>
+					<a href="categories">Página Segura.</a>
 				</p>
 			</nav>
 	<footer>

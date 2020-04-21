@@ -4,10 +4,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Conexion implements IConexion {
-	enum BBDD {ORACLE,MySQL}
+	/*
+	 * Se limitan las bases de datos a las que nos podemos conectar
+	 * 
+	 * */
+	enum BBDD {ORACLE,MySQL,H2}
+	
 	public static Connection conn;
 	public BBDD source;
 	
+	/*
+	 * Se prevee poder cambiar de bases de datos.
+	 * */
 	private Conexion() {	
 		this.source = BBDD.MySQL;
 	}
@@ -22,11 +30,13 @@ public class Conexion implements IConexion {
 		if (conn == null || conn.isClosed()) {
 			switch(source) {
 			case MySQL:
-				conn = MySqlConexion.conectBBDD();
+				conn = MySqlConexion.getConexion();
 				break;
 			case ORACLE:
 				conn = OracleConexion.getConexion();
 				break;
+			case H2:
+				conn = H2Conexion.getConexion();
 			default:
 				conn = null;
 			}

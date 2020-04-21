@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import interfeces.IServiceUser;
 import model.User;
 import security.EncryptPass;
-import services.IServiceUser;
 import services.ServiceUser;
 
 /**
@@ -33,12 +34,13 @@ public class login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	// Inicializar session y definición de variables globales.
-		HttpSession session = request.getSession(false);
-		String nextpage="";
-		if(session.getAttribute("nextpage")==null){
+		HttpSession session = request.getSession(true);
+		String prevpage = "";
+		String nextpage = "";
+		if(session.getAttribute("prevpage")==null){
 			nextpage ="/index.jsp";
 		}else {
-			nextpage =(String) session.getAttribute("nextpage");
+			nextpage =(String) session.getAttribute("prevpage");
 		}
 		
 		User user = null;
@@ -56,7 +58,7 @@ public class login extends HttpServlet {
 			access = EncryptPass.equalsDigest(pass, pass2);	
 			if(access) {
 				mensaje = "Conexion exitosa, Bienvenido: " + user.getName() + " a YouStore";
-				session =  request.getSession(true);
+				System.out.println(access);
 				session.setAttribute("access", access);
 			}else {
 				mensaje = "Password Incorrecta";
@@ -64,7 +66,6 @@ public class login extends HttpServlet {
 		}else {
 			mensaje = "Usuario no existe";
 		}
-	//	request.setAttribute("access", access);
 		request.setAttribute("mensaje",mensaje);
 		request.setAttribute("user",user);
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(nextpage);

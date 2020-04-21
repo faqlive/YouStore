@@ -9,6 +9,7 @@ import java.util.List;
 
 import database.IConexion;
 import generics.GenericDao;
+import interfeces.IUserDao;
 import model.User;
 
 public class UserDao extends GenericDao implements IUserDao{
@@ -118,6 +119,12 @@ public class UserDao extends GenericDao implements IUserDao{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<User> getAllForaneKey(String fkey) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

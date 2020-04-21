@@ -3,7 +3,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:if test="${!access}">
-	<c:set var="nextpage" scope="session" value="/categories.jsp"/>
+	<c:set var="prevpage" scope="session" value="categories"/>
 	<c:redirect url = "./login.html"/>
 </c:if>
 <!DOCTYPE html>
@@ -23,11 +23,12 @@
 <title>Categories YouStore</title>
 </head>
 <body>
+	<div class="container">
 	<main>
 		<h3>
 			<center>bienvenido:${user.name}</center>
 		</h3>
-		<a href="S_VerFacturas">si quiere ver sus facturas pulse aqui</a><br/>
+		<a href="#">si quiere ver sus facturas pulse aqui</a><br/>
 		<a href="logout">logout</a><br/>
 		<table class="table table-dark">
 			<thead>
@@ -38,12 +39,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="categoria" items="${categorias}" varStatus="loop">
+				<c:forEach var="category" items="${listCategories}" varStatus="loop">
 					<tr>
 						<th scope="row">${loop.index+1}</th>
-						<td>${categoria.id_categoria}</td>
-						<td><a
-							href="S_List_Productos?id_categoria=${categoria.id_categoria}&descripcion=${categoria.descripcion}">${categoria.descripcion}</a></td>
+						<td>${category.idCat}</td>
+						<td><a href="products?idCat=${category.idCat}&nameCat=${category.nameCat}">${category.nameCat}</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -52,5 +52,6 @@
 	<footer>
 		<a href="carrito.jsp">ver carrito</a>(${total_productos})
 	</footer>
+	</div>
 </body>
 </html>
