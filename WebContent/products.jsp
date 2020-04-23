@@ -42,11 +42,11 @@
     <c:forEach var="product" items="${listProducts}" varStatus="loop">
     <tr> 
      <form method="post" action="S_Add_Carrito">
-         <input type="hidden" name="id_producto" value=${producto.id_producto} >
-         <input type="hidden" name="descripcion" value=${producto.descripcion} >
-         <input type="hidden" name="precio" value=${producto.precio} >
+         <input type="hidden" name="idProduc" value="${producto.idProduc}" >
+         <input type="hidden" name="descProduct" value="${producto.descProduct}" >
+         <input type="hidden" name="price" value="${producto.price}" >
          <th scope="row">${loop.index+1}</th>
-         <td>${product.idProduct}</td>
+         <td>${product.idProduc}</td>
          <td>${product.descProduct}</td>
          <td>${product.price}</td>
          <td>${product.stock}</td>
@@ -63,7 +63,7 @@
     </c:forEach>
     </tbody> 
 </table>
-<a href="categorias.jsp">IR A CATEGORIAS</a><br>
+<a href="categories">IR A CATEGORIAS</a><br>
 <a href="carrito.jsp">ver carrito</a>(${total_productos})
 
 </body>

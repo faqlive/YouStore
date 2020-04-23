@@ -51,7 +51,10 @@
 					</p>
 				</c:if>
 				<p>
-					<a href="categories">Página Segura.</a>
+					<a href="categories">Categorías.</a>
+				</p>
+				<p>
+					<a href="./create.jsp">Crear</a>
 				</p>
 			</nav>
 	<footer>

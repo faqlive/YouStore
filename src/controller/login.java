@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import interfeces.IServiceUser;
 import model.User;
 import security.EncryptPass;
 import services.ServiceUser;
+import uti.Util;
 
 /**
  * Servlet implementation class login
@@ -42,7 +42,6 @@ public class login extends HttpServlet {
 		}else {
 			nextpage =(String) session.getAttribute("prevpage");
 		}
-		
 		User user = null;
 		boolean access = false;
 		String mensaje = "";
@@ -58,14 +57,14 @@ public class login extends HttpServlet {
 			access = EncryptPass.equalsDigest(pass, pass2);	
 			if(access) {
 				mensaje = "Conexion exitosa, Bienvenido: " + user.getName() + " a YouStore";
-				System.out.println(access);
-				session.setAttribute("access", access);
 			}else {
 				mensaje = "Password Incorrecta";
 			}
 		}else {
 			mensaje = "Usuario no existe";
 		}
+		//Util.init();
+		session.setAttribute("access", access);
 		request.setAttribute("mensaje",mensaje);
 		request.setAttribute("user",user);
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(nextpage);
