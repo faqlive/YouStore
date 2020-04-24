@@ -27,6 +27,14 @@ public class Product implements Serializable{
 		this.idCat = idCat;
 		this.price = price;
 	}
+	public Product(String nameProduct, String descProduct, int idCat, double price, int stock) {
+		super();
+		this.nameProduct = nameProduct;
+		this.descProduct = descProduct;
+		this.idCat = idCat;
+		this.price = price;
+		this.stock = stock;
+	}
 
 	public int getIdProduc() {
 		return idProduc;
